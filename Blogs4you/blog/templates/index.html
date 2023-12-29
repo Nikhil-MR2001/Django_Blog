@@ -22,29 +22,28 @@
     <link rel="stylesheet" href="{% static 'css1/styles.css' %}">
     <title>Document</title>
 </head>
-<body>
-
+<body style="background-color:aqua;">
 <div class="content" style="background-color:black;">
 
-    <div class="container" style="color:white; margin-bottom:1px;">
-      <h2 class="my-5 text-center"style=" font-size: 40px;">Latest Articles</h2>
+    <div class="container my-1" style="color:white; margin-bottom:1px;">
+        <h2 class="my-10 text-center" style="font-size: 40px;">Latest Articles</h2>
     </div>
 
     <div class="site-section bg-black mb-5">
-      <div class="container owl-2-style">
+        <div class="container owl-2-style">
 
-        <h2 class="text-white py-5">Featured Categories</h2>
+            <h2 class="text-white py-5">Featured Categories</h2>
 
-        <div class="owl-carousel owl-2">
-            {% for category in categories %}
-              <div class="media-29101">
-                <a href="#"><img src="{{ category.image.url }}" alt="Category Image" class="img-fluid"></a>
-                <h3><a href="#">{{ category.title }}</a></h3>
-              </div>
-            {% endfor %}
+            <div class="owl-carousel owl-2">
+                {% for category in categories %}
+                <div class="media-29101">
+                    <a href="#"><img src="{{ category.image.url }}" style="height:250px;" alt="Category Image" class="img-fluid"></a>
+                    <h3><a href="#">{{ category.title }}</a></h3>
+                </div>
+                {% endfor %}
+            </div>
+
         </div>
-
-      </div>
     </div>
 
 </div>
@@ -53,7 +52,7 @@
 {% for i in posts %}
 	<section class="dark">
 		<div class="container py-4">
-			<article class="postcard dark blue">
+			<article class="postcard dark blue" style="height:320px;">
 				<a class="postcard__img_link" href="#">
 					<img class="postcard__img" src="{{ i.image.url }}" alt="Image Title" />
 				</a>
@@ -65,15 +64,15 @@
 						</time>
 					</div>
 					<div class="postcard__bar"></div>
-					<div class="postcard__preview-txt">{{i.content}}</div>
+					<div class="postcard__preview-txt">{{i.content | safe }}</div>
 					<ul class="postcard__tagbox">
-						<li class="tag__item"><i class="fas fa-tag mr-2"></i>Podcast</li>
-						<li class="tag__item"><i class="fas fa-clock mr-2"></i>55 mins.</li>
+						<li class="tag__item"><i class="fas fa-clock mr-2"></i>55 mins ago</li>
 						<li class="tag__item play blue">
-							<a href="#"><i class="fas fa-play mr-2"></i>Play Episode</a>
+							<a href="{% url 'blog_detail' i.post_id %}"><i class="fas fa-play mr-2"></i>Read More</a>
 						</li>
 					</ul>
 				</div>
+<!--                {{i.content | safe }}-->
 			</article>
 		</div>
 	</section>

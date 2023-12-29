@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Your App</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .welcome-container {
+      text-align: center;
+      animation: slideIn 1s ease-in-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(-20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    h1 {
+      font-size: 3em;
+      color: #00ff00; /* light green */
+    }
+
+    .button-container {
+      margin-top: 20px;
+      animation: fadeInUp 1s ease-in-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .signup-btn, .enter-btn {
+      display: inline-block;
+      padding: 15px 30px;
+      font-size: 1.2em;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .signup-btn {
+      background-color: #00ff00; /* light green */
+      color: #000; /* black */
+      margin-right: 10px;
+    }
+
+    .signup-btn:hover {
+      background-color: #009900; /* darker green on hover */
+    }
+
+    .enter-btn {
+      background-color: #000; /* black */
+      color: #00ff00; /* light green */
+    }
+
+    .enter-btn:hover {
+      background-color: #333; /* darker black on hover */
+    }
+
+    .register-prompt {
+      margin-top: 20px;
+      opacity: 0;
+      animation: fadeIn 1s ease-in-out 2s forwards;
+    }
+
+    .register-link {
+      color: #00ff00; /* light green */
+      text-decoration: underline;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .register-link:hover {
+      color: #009900; /* darker green on hover */
+    }
+  </style>
+</head>
+<body>
+  <div class="welcome-container">
+    <h1>Welcome to Your App</h1>
+    <div class="button-container">
+      <a href="login" class="signup-btn">Log In</a>
+      <a href="index" class="enter-btn">Enter Without Signing In</a>
+    </div>
+    <div class="register-prompt">
+      <p>If you don't have an account, <span class="register-link"><a href="{% url 'signup' %}">register here</a></span>.</p>
+    </div>
+  </div>
+</body>
+</html>

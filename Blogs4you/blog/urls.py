@@ -5,7 +5,13 @@ from . import views
 
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', views.welcome, name='welcome'),
+    path('index/', views.index, name='index'),
+    path('allblog/', views.allblog, name='allblog'),
+    path('blog/<int:post_id>/', views.blog_detail, name='blog_detail'),
+    path('signup/', views.signup, name='signup'),
+    path('login/', views.login, name='login'),
+
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

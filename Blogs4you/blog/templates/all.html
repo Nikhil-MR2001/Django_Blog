@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Allblogs</title>
+</head>
+<body>
+    {% for blog in blogs %}
+        <div>
+            <h2>{{ blog.title }}</h2>
+            <p>{{ blog.content }}</p>
+            <!-- Add more fields as needed -->
+        </div>
+    {% endfor %}
+</body>
+</html>
