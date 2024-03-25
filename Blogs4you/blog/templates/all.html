@@ -2,15 +2,176 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Allblogs</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #121212; /* Dark background */
+            color: #ffffff; /* White text */
+        }
+
+        .container {
+            background-color: #1e1e1e; /* Darker container background */
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Slightly stronger shadow */
+        }
+
+        .blog-entry {
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+            transition: box-shadow 0.3s;
+            background-color: ##000; /* Darker card background */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px; /* Spacing between blog entries */
+        }
+
+        .blog-entry:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        .category-section {
+            background-color: #000; /* Black background for category section */
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px; /* Spacing between category section and blog section */
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+
+
+<!--            styling for navbar-->
+
+
+        }
+    </style>
+    <title>All Blogs</title>
 </head>
 <body>
-    {% for blog in blogs %}
-        <div>
-            <h2>{{ blog.title }}</h2>
-            <p>{{ blog.content }}</p>
-            <!-- Add more fields as needed -->
+
+
+<nav class="navbar navbar-expand-lg" style="background-color: black;">
+    <a class="navbar-brand" href="#" style="color: #00ff00; padding-left: 20px;">
+        <img src="#" alt="Blogs4You Logo" height="30">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon" style="background-color: #00ff00;"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <form  method="get" action="{% url 'allblog' %}" class="form-inline search-bar" style="margin-right: 10px;">
+            <input class="form-control mr-sm-2 glowing-border" type="search" placeholder="Search" aria-label="Search" name="q" style="background-color:transparent; border: 1px solid #00ff00; border-radius: 4px; transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="border-color: #00ff00; box-shadow: 0 0 10px #00ff00; animation: glowing 1s infinite alternate;">Search</button>
+        </form>
+        <ul class="navbar-nav" style="padding-right: 20px;">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'allblog' %}" style="color: red !important; position: relative; padding: 7px 15px; margin: 0px 3px; border:2px solid red; border-radius:5px;  box-shadow: 0 0 10px red; animation: glowing 1s infinite alternate;">
+                    Clear
+                </a>
+            </li>
+
+<!--        <form method="get" action="{% url 'allblog' %}">-->
+<!--            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">-->
+<!--            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
+<!--        </form>-->
+    </div>
+</nav>
+
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                {% for blog in blogs %}
+                <a href="{% url 'blog_detail' blog.post_id %}" style="text-decoration: none !important; color: inherit;">
+                    <div class="blog-entry" style="border: 2px solid #00ff00; padding: 23px; margin-bottom: 20px; border-radius: 12px; overflow: hidden; transition: transform 0.3s;">
+                        <div class="row">
+                            <div class="col-md-7">
+                                <h1 style="color: #00ff00; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 2rem; margin-bottom: 15px;">{{ blog.title }}</h1>
+                                <p style="color: #ccc; font-size: 1.1rem;">{{ blog.content | truncatewords:43 | safe }}</p>
+                            </div>
+                            <div class="col-md-5">
+                                <img src="{{ blog.image.url }}" alt="image not found" style="width: 100%; border-radius: 12px; object-fit: cover; padding-top:30px;">
+                            </div>
+                        </div>
+
+                        <!-- Advanced 3D tilt effect on hover -->
+                        <style>
+                            .blog-entry {
+                                transform-style: preserve-3d;
+                                transform-origin: center right;
+                                perspective: 1000px;
+                            }
+
+                            .blog-entry:hover {
+                                transform: rotateY(-10deg) scale(1.05);
+                                box-shadow: 0 10px 20px rgba(0, 255, 0, 0.5);
+                            }
+                        </style>
+
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+            <div class="col-md-4 category-section">
+                {% for c in categories %}
+                    <a href="{% url 'category' c.cat_id %}" style="text-decoration: none">
+                        <div class="category-entry" style="border: 2px solid #00ff00; padding: 12px; margin: 18px; position: relative; overflow: hidden; border-radius: 12px;">
+                            <h1 style="color: #00ff00; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 1.5rem; margin-bottom: 10px;">{{ c.title }}</h1>
+                            <img src="{{ c.image.url }}" style="height: 190px; width: 100%; object-fit: cover; border-radius: 8px;">
+                <!--            <div class="category-description" style="margin-top: 10px; color: #ccc; font-size: 0.9rem;">{{ c.description | truncatewords:20 }}</div>-->
+
+                            <!-- Glowing border on hover -->
+                            <style>
+                            .category-entry:hover {
+                                             border: 2px solid #00ff00;
+                                            box-shadow: 0 0 20px rgba(0, 255, 0, 0.9);
+                                            transition: border-color 0.5s, box-shadow 0.6s;
+                                            transform: rotate(6deg) scale(1.07);
+
+                            }
+                        </style>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+
         </div>
-    {% endfor %}
+
+
+    </div>
+<!--<p>nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn</p>-->
+        <div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index' %}" style="color: #00ff00 !important; position: relative; margin:10px 0px; padding: 7px 15px; border:2px solid #00ff00; border-radius:5px; text-align: center; transition: background-color 0.3s, color 0.3s; background-color: #000; cursor: pointer; overflow: hidden;">
+                        <span style="position: relative; z-index: 1;">Back to Home</span>
+                        <span style="position: absolute; z-index: 0; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(45deg, #ff8a00, #ffc800); transform: scaleX(0); transform-origin: bottom right; transition: transform 0.3s;"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'allblogcard' %}" style="color: #00ff00 !important; position: relative; margin:10px 0px; padding: 7px 15px; border:2px solid #00ff00; border-radius:5px; text-align: center; transition: background-color 0.3s, color 0.3s; background-color: #000; cursor: pointer; overflow: hidden;">
+                        <span style="position: relative; z-index: 1;">More Posts</span>
+                        <span style="position: absolute; z-index: 0; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(45deg, #ff8a00, #ffc800); transform: scaleX(0); transform-origin: bottom right; transition: transform 0.3s;"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

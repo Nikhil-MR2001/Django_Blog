@@ -4,6 +4,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .forms import UserForm
 from .models import Category, Post
 from django.contrib.auth import login as auth_login  # Alias the login function
+from django.contrib.auth import logout as auth_logout
 
 
 # Create your views here.
@@ -24,12 +25,30 @@ def index(request):
 
 def blog_detail(request, post_id):
     blog_post = get_object_or_404(Post, post_id=post_id)
-    return render(request, 'blog_detail.html', {'blog_post': blog_post})
+    related_item = Post.objects.filter(cat=blog_post.cat)[:3]
+    return render(request, 'blog_detail.html', {'blog_post': blog_post, 'related_item': related_item})
 
 
 def allblog(request):
-    blogs = Post.objects.all()[:6]
-    return render(request, 'all.html', {'blogs': blogs})
+    categories = Category.objects.all()
+    blogs = Post.objects.all()
+
+    if 'q' in request.GET and request.GET['q']:
+        q = request.GET['q']
+        print(f"Search query: {q}")
+        blogs = blogs.filter(title__icontains=q)
+
+    # Slice the queryset after applying the filter
+    blogs = blogs[:4]
+
+    return render(request, 'all.html', {'blogs': blogs, 'categories': categories})
+
+
+def allblogcard(request):
+    blogs = Post.objects.all()
+
+    return render(request, 'allblogcard.html', {'blogs': blogs})
+
 
 
 def signup(request):
@@ -52,7 +71,12 @@ def signup(request):
 
     return render(request, 'signup.html', {'user_form': user_form})
 
+# when a user try to login to the blog
+def login_index(request):
+    return render(request, 'login_index.html')
 
+
+# when a user try to access the blog without logging in
 def login(request):
     if request.method == 'POST':
         # Retrieve the values from the form
@@ -66,10 +90,26 @@ def login(request):
             # Log in the user
             auth_login(request, user)
             # Redirect to a success page or home page
-            return redirect('index')
+            return redirect('login_index')
         else:
             # Handle authentication failure (e.g., display an error message)
             error_message = "Invalid credentials. Please try again."
             return render(request, 'login.html', {'error_message': error_message})
 
     return render(request, 'login.html')
+
+
+def logout(request):
+    auth_logout(request)
+    return redirect('/')
+
+
+
+def category_based_posts(request, cat_id):
+    category = Category.objects.get(cat_id=cat_id)
+    catbasedpost = Post.objects.filter(cat=category)
+
+    return render(request, 'category_based_posts.html', {
+        'cat': category,
+        'c': catbasedpost
+    })

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grid Blog Cards</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #0a0a0a; /* Dark background for the overall page */
+    color: #ffffff; /* White text for better contrast */
+  }
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+    padding: 16px;
+    justify-content: center;
+  }
+  .card {
+    background-color: #001f27; /* Darker shade for the card */
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 162, 232, 0.2); /* Aqua colored shadow */
+    overflow: hidden;
+    border: 1px solid #00ff00; /* Aqua border for a modern touch */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effects */
+  }
+  .card:hover {
+    transform: translateY(-5px); /* Slight lift effect on hover */
+    box-shadow: 0 6px 25px rgba(0, 162, 232, 0.3); /* Enhanced shadow on hover */
+  }
+  .card-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: opacity 0.3s ease; /* Smooth transition for image hover effect */
+  }
+  .card-image:hover {
+    opacity: 0.9; /* Slight transparency effect on hover */
+  }
+  .card-content {
+    padding: 16px;
+  }
+  .card-title {
+    margin: 0;
+    color: #00ff00; /* Green color for the title */
+    font-size: 24px;
+    font-weight: 700; /* Bold font weight for the title */
+  }
+  .card-text {
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-container">
+  {% for i in blogs %}
+    <a href="{% url 'blog_detail' i.post_id %}" style="text-decoration:none; color:white;">
+      <div class="card">
+        <img src="{{ i.image.url }}" alt="Card Image" class="card-image">
+        <div class="card-content">
+          <h1 class="card-title"> {{ i.title }}</h1>
+          <p class="card-text">{{ i.content | truncatewords:20 | safe }}</p>
+        </div>
+      </div>
+    </a>
+  {% endfor %}
+</div>
+
+</body>
+</html>

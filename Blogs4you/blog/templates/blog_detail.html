@@ -1,77 +1,104 @@
-<!-- blog_detail.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ blog_post.title }}</title>
+
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #292b2c; /* Dark background color */
-            color: #fff;
+            background-color: #000000; /* Dark background */
+            color: #00ff00; /* Bright green text color */
+            font-family: 'Poppins', sans-serif; /* Modern font */
             margin: 0;
             padding: 0;
-            text-align: center;
         }
 
-        header {
-            background-color: #212529; /* Darker header background */
-            padding: 1em;
-        }
 
         h1 {
-            margin-bottom: 0.5em;
-            color: #17a2b8; /* Aqua color */
-        }
-
-        p {
-            margin: 0.5em 0;
-            color: #ccc; /* Light gray text */
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-            margin-bottom: 1em;
-            border-radius: 8px; /* Increased border-radius */
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7); /* Darker box shadow */
+            margin: 0;
+            font-size: 3em; /* Larger font size */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Text shadow for emphasis */
         }
 
         .content-container {
-            background-color: #343a40; /* Darker blue background */
-            padding: 1.5em; /* Increased padding */
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
-            margin: 1em;
-            border-radius: 8px;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #000000; /* Darker content background */
+            border: 2px solid #00ff00; /* Bright green border */
+            border-radius: 10px;
         }
 
-        a {
+        img {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        div {
+            margin-top: 20px;
+            color: #ddd; /* Lighter text color for content */
+        }
+
+        a.abc {
             display: inline-block;
-            padding: 0.7em 1.5em; /* Increased padding */
-            background-color: #17a2b8; /* Aqua color */
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #00ff00; /* Bright green button */
             color: #fff;
+            text-align: center;
             text-decoration: none;
-            border-radius: 5px; /* Slightly rounded corners */
-            transition: background-color 0.3s ease;
-            margin-top: 1em;
+            border-radius: 5px;
+            transition: background-color 0.3s;
         }
 
-        a:hover {
-            background-color: #138496; /* Darker Aqua color on hover */
+        a.abc:hover {
+            background-color: #009900; /* Darker shade of green on hover */
         }
+
+
+
+
+<!--        related Posts styling-->
+
+
     </style>
 </head>
 <body>
     <header>
-        <h1>{{ blog_post.title }}</h1>
-        <p>Category: {{ blog_post.cat }}</p>
-        <p>Created: {{ blog_post.created }}</p>
+    <h1 style="color: #00ff00; text-align: center; margin-top: 40px; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);"> {{ blog_post.title }}</h1>
+        <p style=" text-align: center; ">Category: {{ blog_post.cat }}</p>
+<!--        <p>Created: {{ blog_post.created }}</p>-->
     </header>
     <div class="content-container">
-        <img src="{{ blog_post.image.url }}" alt="{{ blog_post.title }} Image">
-        <div>{{ blog_post.content | safe }}</div>
-        <a href="{{ blog_post.url }}" target="_blank">Click here for more info...</a>
+        <img src="{{ blog_post.image.url }}" alt="{{ blog_post.title }} Image" style="width:90%; height:400px; display: block; margin-left: auto; margin-right: auto;">
+        <div style="text-align:center;">{{ blog_post.content | safe }}</div>
+        <a class="abc" href="{{ blog_post.url }}" target="_blank" style="margin-left:300px;">Discover More</a>
     </div>
+
+<div class="related-articles" style="margin-top: 40px;">
+    <h1 style="color: #00ff00; text-align: center; margin-top: 40px; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);">Related Articles</h1>
+    <div class="row" style="display: flex; justify-content: space-between;">
+        {% for i in related_item %}
+        <div class="related-article" style="background-color: #000000; border-radius: 10px; width: {% if related_item|length == 1 %}100%{% elif related_item|length == 2 %}calc(50% - 20px){% else %}calc(33.33% - 20px){% endif %}; margin-bottom: 40px; overflow: hidden; margin-left: 40px; margin-right: 40px; box-shadow: 0px 0px 20px rgba(0,255,0,0.75);">
+            <img src="{{ i.image.url }}" alt="{{ i.title }} Image" style="width: 90%; margin-top:20px; margin-left:20px; margin-right:20px; max-height: 100px; object-fit: cover; border-radius: 5px 5px 0 0;">
+            <div class="content" style="padding: 20px;">
+                <h2 style="color: #00ff00; margin-top: 0;">{{ i.title }}</h2>
+                <p style="color: #ddd;">{{ i.content | safe | truncatewords:20 }}</p>
+                <a class="btn-discover" href="{% url 'blog_detail' i.post_id %}" target="_blank" style="display: block; padding: 10px 20px; background-color: #00ff00; color: #fff; text-align: center; text-decoration: none; border-radius: 0 0 5px 5px; transition: background-color 0.3s;">Discover More</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+    <style>.related-article:hover {
+    transform: scale(1.1); /* Scale up by 10% on hover */
+}
+</style>
+
+
+
 </body>
 </html>

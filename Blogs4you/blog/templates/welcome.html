@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Welcome to Your App</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> <!-- Font Awesome for icons -->
   <style>
     body {
       background-color: #000;
@@ -47,9 +48,14 @@
     h1 {
       font-size: 3em;
       color: #00ff00; /* light green */
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     }
 
     .button-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       margin-top: 20px;
       animation: fadeInUp 1s ease-in-out;
     }
@@ -102,25 +108,34 @@
 
     .register-link {
       color: #00ff00; /* light green */
-      text-decoration: underline;
-      cursor: pointer;
+      text-decoration: none;
+      font-weight: bold;
       transition: color 0.3s ease;
     }
 
     .register-link:hover {
       color: #009900; /* darker green on hover */
     }
+
+    .register-link a {
+      text-decoration: underline;
+      color: #00ff00; /* light green */
+    }
+
+    .register-link a:hover {
+      color: #009900; /* darker green on hover */
+    }
   </style>
 </head>
 <body>
   <div class="welcome-container">
-    <h1>Welcome to Your App</h1>
+    <h1>Unleash the Power of Ideas: Your Blogging Haven Awaits</h1>
     <div class="button-container">
       <a href="login" class="signup-btn">Log In</a>
-      <a href="index" class="enter-btn">Enter Without Signing In</a>
+      <a href="index" class="enter-btn">Enter As Guest</a>
     </div>
     <div class="register-prompt">
-      <p>If you don't have an account, <span class="register-link"><a href="{% url 'signup' %}">register here</a></span>.</p>
+      <p>Don't have an account yet? <span class="register-link"><a href="{% url 'signup' %}">Register here</a></span> and start sharing your ideas with the world.</p>
     </div>
   </div>
 </body>

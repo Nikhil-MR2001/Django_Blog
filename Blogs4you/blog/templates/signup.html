@@ -1,16 +1,33 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign Up</title>
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="{% static 'css1/loginstyle.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
 </head>
 <body>
-  <h2>Sign Up</h2>
-  <form method="post" action="{% url 'signup' %}">
-    {% csrf_token %}
-    {{ user_form.as_p }}
-    <button type="submit">Sign Up</button>
-  </form>
+    <div class="login-form">
+        <div class="text">
+            SIGN UP
+        </div>
+        <form method="post" action="{% url 'signup' %}">
+            {% csrf_token %}
+            <div class="field">
+                <div class="fas fa-envelope"></div>
+                {{ user_form.username }}
+            </div>
+            <div class="field">
+                <div class="fas fa-lock"></div>
+                {{ user_form.password1 }}
+            </div>
+            <div class="field">
+                <div class="fas fa-lock"></div>
+                {{ user_form.password2 }}
+            </div>
+            <button type="submit">SIGN UP</button>
+        </form>
+    </div>
 </body>
 </html>
